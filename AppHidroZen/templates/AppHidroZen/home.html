@@ -1,88 +1,64 @@
 {% extends "AppHidroZen/base.html" %}
 
-
 {% block title %}
     Inicio - HidroZen
 {% endblock %}
 
-
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        
-        {% load static %}
-        
-        <img src="{% static 'img/fondo.jpg' %}" alt="Descripción de la imagen">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HidroZen</title>
-        
 {% block content %}
-</head>
-<body>
-    <div>
-        <ul class="principal">
-            <li><a href="#¿Quienes-somos?">¿Quiénes somos?</a></li>
-            <li><a href="#Misión">Misión</a></li>
-            <li><a href="#Visión">Visión</a></li>
-            <li><a href="#Productos">Nuestro Producto</a></li>
-            <li><a href="#Contáctos">Contáctos</a></li>
-            <input placeholder="Buscar en Hidrozen" class="input" name="text" type="text">
-            <a href="{% url 'login' %}" class="btn-login">Login</a>
-
-
-
-
-    </div>
-    
-
-    <header>
-        <div class="container">
-            <img src="{% static 'img/HidroZenLogo-removebg-preview.png' %}" alt="HidroZenLogo" class="logo"> 
-            <div class="header-content">
-                <h1>Bienvenido a HidroZen</h1>
-                <p>Avanza al futuro y deja que la naturaleza avance contigo.</p>
-                <hr>
-            </div>
+<header>
+    <div class="container">
+        {% load static %}
+        <img src="{% static 'img/HidroZenLogo-removebg-preview.png' %}" alt="HidroZenLogo" class="logo">      
+        <div class="header-content">
+            <h1>Bienvenido a HidroZen</h1>
+            <p>Avanza al futuro y deja que la naturaleza avance contigo.</p>
+            <hr>
         </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <h2>Riego Inteligente</h2>
-            <p>Descubre cómo HidroZen puede transformar tu jardín.</p>
-            <button onclick="openModal()">Más Información</button>
-        </section>
-    </main>
-
-    <div class="card">
-        <h2 id="¿Quienes-somos?">¿Quiénes somos?</h2>
-        <p>En HidroZen, nos destacamos en la tecnología de riego automatizado, 
-            dedicados a hacer que el cuidado de las plantas sea más fácil y eficiente.</p>
     </div>
 
-    <div class="card_2">
-        <h2 id="Misión">Misión</h2>
-        <p>Nuestra misión es proporcionar soluciones innovadoras de riego que promuevan el crecimiento 
-            saludable de las plantas, reduciendo el desperdicio de agua y optimizando el tiempo de nuestros clientes.</p>
-    </div>
+</header>
 
-    <div class="card_3">
-        <h2 id="Visión">Visión</h2>
-        <p>Vislumbramos un futuro donde cada jardín, campo o parque pueda beneficiarse de una tecnología 
-            de riego inteligente que cuide del medio ambiente mientras asegura plantas saludables y fuertes.</p>
-    </div>
+<main>
+<section class="hero">
+    <h2>Riego Inteligente</h2>
+    <p>Descubre cómo HidroZen puede transformar tu jardín.</p>
+    <button onclick="openModal()">Más Información</button>
+</section>
+</main>
 
-    <div class="card_4">
-        <h2 id="Productos">Nuestro Producto</h2>
-        <p>Presentamos el Regador Automático HidroZen, diseñado para ser parte integral de cualquier proyecto de riego inteligente.</p>
-        <ul>
-            <li>**Regador Automático HidroZen**: Este dispositivo innovador optimiza el uso del agua y asegura que cada planta reciba la cantidad exacta de riego necesaria, sin desperdicio.</li>
-            <li>**Sensores de Humedad**: Monitorean constantemente la humedad del suelo para proporcionar riego solo cuando es necesario.</li>
-            <li>**Controladores Remotos**: Permiten el control del sistema de riego desde cualquier lugar a través de una aplicación Web.</li>
-            <li>**Sistemas de Irrigación Completa**: Soluciones integrales que combinan regadores automáticos, sensores y controladores para un manejo eficiente del agua.</li>
-        </ul>
-    </div>
+
+<section class="card">
+    <h2 id="¿Quienes-somos?">¿Quiénes somos?</h2>
+    <p>En HidroZen, nos destacamos en la tecnología de riego automatizado...</p>
+</section>
+
+
+
+
+<section class="card_2">
+<h2 id="Misión">Misión</h2>
+<p>Nuestra misión es proporcionar soluciones innovadoras de riego que promuevan el crecimiento 
+    saludable de las plantas, reduciendo el desperdicio de agua y optimizando el tiempo de nuestros clientes.</p>
+</section>
+
+
+<section class="card_3">
+<h2 id="Visión">Visión</h2>
+<p>Vislumbramos un futuro donde cada jardín, campo o parque pueda beneficiarse de una tecnología 
+    de riego inteligente que cuide del medio ambiente mientras asegura plantas saludables y fuertes.</p>
+</section>
+
+<section class="card_4">
+    <h2 id="Productos">Nuestro Producto</h2>
+    <p>Presentamos el Regador Automático HidroZen, diseñado para ser parte integral de cualquier proyecto de riego inteligente.</p>
+    <ul>
+        <li><strong>Regador Automático HidroZen:</strong> Este dispositivo innovador optimiza el uso del agua...</li>
+        <li><strong>Sensores de Humedad:</strong> Monitorean constantemente la humedad del suelo...</li>
+        <li><strong>Controladores Remotos:</strong> Permiten el control del sistema de riego...</li>
+        <li><strong>Sistemas de Irrigación Completa:</strong> Soluciones integrales que combinan regadores automáticos...</li>
+    </ul>
+    
+</section>
 
     <!-- Modal -->
     <div id="infoModal" class="modal">
@@ -101,29 +77,5 @@
     </div>
 
     <script src="script.js"></script>
-
-    <footer>
-        <h2 id="Contáctos">Contáctos</h2>
-
-        <div class="social-buttons">
-            <a href="#" class="social-button github">
-                <!-- Icono de GitHub -->
-            </a>
-            <a href="#" class="social-button linkedin">
-                <!-- Icono de LinkedIn -->
-            </a>
-            <a href="#" class="social-button facebook">
-                <!-- Icono de Facebook -->
-            </a>
-            <a href="#" class="social-button instagram">
-                <!-- Icono de Instagram -->
-            </a>
-        </div>
-
-        @ 2024 HidroZen
-    </footer>
-
-</body>
-</html>
-
 {% endblock %}
+

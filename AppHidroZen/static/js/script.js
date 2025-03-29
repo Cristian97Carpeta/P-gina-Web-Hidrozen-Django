@@ -10,9 +10,9 @@ function closeModal() {
     document.getElementById("infoModal").style.display = "none";
 }
 
-// Cerrar el modal si el usuario hace clic fuera de él
 window.onclick = function(event) {
-    if (event.target == document.getElementById("infoModal")) {
-        document.getElementById("infoModal").style.display = "none";
+    var modal = document.getElementById("infoModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
 }

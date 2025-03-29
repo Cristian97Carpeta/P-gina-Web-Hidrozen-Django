@@ -1,57 +1,28 @@
 {% extends "AppHidroZen/base.html" %}
 
-<title>
+{% block title %}
     Login - HidroZen
-</title>
-
-
-{% load static %}
-
-{% block content %}
-<div>
-    <ul class="principal">
-        <li><a href="#¿Quienes-somos?">¿Quiénes somos?</a></li>
-        <li><a href="#Misión">Misión</a></li>
-        <li><a href="#Visión">Visión</a></li>
-        <li><a href="#Productos">Nuestro Producto</a></li>
-        <li><a href="#Contáctos">Contáctos</a></li>
-        <input placeholder="Buscar en Hidrozen" class="input" name="text" type="text">
-    </ul>
-</div>
 {% endblock %}
 
+
+
+{% block content %}
 <form class="form">
     <span class="input-span">
-    <label for="email" class="label">Email</label>
-    <input type="email" name="email" id="email"
-    /></span>
+        <label for="email" class="label">Email</label>
+        <input type="email" name="email" id="email" />
+    </span>
     <span class="input-span">
-    <label for="password" class="label">Password</label>
-    <input type="password" name="password" id="password"
-    /></span>
+        <label for="password" class="label">Password</label>
+        <input type="password" name="password" id="password" />
+    </span>
     <span class="span"><a href="#">Forgot password?</a></span>
     <input class="submit" type="submit" value="Log in" />
     <span class="span">Don't have an account? <a href="#">Sign up</a></span>
 </form>
+{% endblock %}
 
 
-<footer>
-    <h2 id="Contáctos">Contáctos</h2>
 
-    <div class="social-buttons">
-        <a href="#" class="social-button github">
-            <!-- Icono de GitHub -->
-        </a>
-        <a href="#" class="social-button linkedin">
-            <!-- Icono de LinkedIn -->
-        </a>
-        <a href="#" class="social-button facebook">
-            <!-- Icono de Facebook -->
-        </a>
-        <a href="#" class="social-button instagram">
-            <!-- Icono de Instagram -->
-        </a>
-    </div>
 
-    @ 2024 HidroZen
-</footer>
+
