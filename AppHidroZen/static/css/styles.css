@@ -1,6 +1,6 @@
 body {
     min-height: 100vh;
-    background: url('/static/img/nat.jpg') no-repeat center center fixed;
+    background: url('/static/img/naturaleza.jpg') no-repeat center center fixed;
     background-size: cover; /* Asegura que la imagen cubra todo el fondo */
     font-family: 'Creepster', cursive;
     margin: 0;
