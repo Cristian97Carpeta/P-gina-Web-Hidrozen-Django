@@ -1,6 +1,6 @@
 body {
     min-height: 100vh;
-    background: url('/static/img/naturaleza.jpg') no-repeat center center fixed;
+    background: url('/static/img/planta_tecjpg.jpg') no-repeat center center fixed;
     background-size: cover; /* Asegura que la imagen cubra todo el fondo */
     font-family: 'Creepster', cursive;
     margin: 0;
@@ -11,6 +11,19 @@ body {
     display: flex;
     flex-direction: column; /* Asegura que el footer esté en la parte inferior */
 }
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    z-index: -1;
+}
+
+
 
 
 main {

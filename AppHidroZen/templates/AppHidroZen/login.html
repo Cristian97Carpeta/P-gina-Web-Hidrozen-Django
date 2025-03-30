@@ -7,20 +7,28 @@
 
 
 {% block content %}
-<form class="form">
+<div class="form-container">
+    <form class="form">
     <span class="input-span">
-        <label for="email" class="label">Email</label>
-        <input type="email" name="email" id="email" />
+        <label class="label" for="email">Email</label>
+        <input type="email" id="email" name="email">
     </span>
     <span class="input-span">
-        <label for="password" class="label">Password</label>
-        <input type="password" name="password" id="password" />
+        <label class="label" for="password">Contraseña</label>
+        <input type="password" id="password" name="password">
     </span>
-    <span class="span"><a href="#">Forgot password?</a></span>
-    <input class="submit" type="submit" value="Log in" />
-    <span class="span">Don't have an account? <a href="#">Sign up</a></span>
-</form>
+    <button type="submit" class="submit">Ingresar</button>
+
+    <!-- Sección que no aparece -->
+    <p class="signup-text">
+        Don't have an account? <a href="#" class="signup-link">Sign up</a>
+    </p>
+    </form>
+</div>
 {% endblock %}
+
+
+
 
 
 

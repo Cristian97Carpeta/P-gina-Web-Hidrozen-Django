@@ -1,3 +1,28 @@
+/* From Uiverse.io by bociKond */ 
+
+.form-container {
+    position: fixed; /* Fijado para que siempre esté centrado */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 90%; /* Ajusta el tamaño en pantallas pequeñas */
+    max-width: 400px; /* Máximo ancho */
+    overflow: auto; /* Permite desplazamiento si es necesario */
+    max-height: 90vh; /* Evita que se corte en pantallas pequeñas */
+}
+
+
+
+.form {
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
 
 
 .form {
@@ -10,13 +35,7 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
-    max-width: 350px; /* Ajustado para un diseño compacto */
-    background-color: var(--bg-light); /* Fondo claro */
-    padding: 2rem; /* Espacio interno */
-    border-radius: 1rem; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para realce */
-    border: 1px solid var(--clr-alpha); /* Un borde sutil */
-    text-align: center;
+    max-width: 300px;
 }
 
 .form .input-span {
@@ -37,7 +56,6 @@
     gap: 0.5rem;
     background-color: var(--clr-alpha);
     outline: 2px solid var(--bg-dark);
-    transition: outline 0.3s ease; /* Efecto suave */
 }
 
 .form input[type="email"]:focus,
@@ -62,16 +80,14 @@
     color: var(--bg-light);
     border: none;
     cursor: pointer;
-    transition: all 300ms ease-in-out;
+    transition: all 300ms;
     font-weight: 600;
     font-size: 0.9rem;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .form .submit:hover {
     background-color: var(--clr);
     color: var(--bg-dark);
-    transform: scale(1.05); /* Efecto de zoom al pasar el cursor */
 }
 
 .span {
@@ -81,10 +97,27 @@
 
 .span a {
     color: var(--clr);
-    font-weight: bold;
-    transition: color 0.3s ease;
 }
 
-.span a:hover {
-    color: var(--bg-dark);
+.signup-text {
+    color: #ccc;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1rem;
 }
+
+.signup-link {
+    color: #58bc82;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+.form-container {
+    overflow: visible; /* O usa 'auto' si es muy grande */
+}
+
+
