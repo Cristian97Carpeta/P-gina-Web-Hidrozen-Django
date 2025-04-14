@@ -7,6 +7,5 @@ def login_view(request):
     return render(request, 'AppHidroZen/login.html')
 
 def registro_view(request):
-    return render(request, 'AppHidroZen/registro.html')  # Ajusta la ruta según tu estructura
-
+    return render(request, 'AppHidroZen/registro.html') 
 

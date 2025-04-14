@@ -1,11 +1,17 @@
 /* From Uiverse.io by rahilansari261 */ 
 .form {
-    background-color: #15172b;
-    border-radius: 20px;
-    box-sizing: border-box;
-    height: 500px;
-    padding: 20px;
-    width: 320px;
+    position: fixed; /* Fijado para que siempre esté centrado */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 90%; /* Ajusta el tamaño en pantallas pequeñas */
+    max-width: 400px; /* Máximo ancho */
+    overflow: auto; /* Permite desplazamiento si es necesario */
+    max-height: 90vh; /* Evita que se corte en pantallas pequeñas */
 }
 
 .title {

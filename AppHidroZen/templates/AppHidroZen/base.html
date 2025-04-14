@@ -33,13 +33,67 @@
             <li><a href="#Contáctos">Contáctos</a></li>
             <input placeholder="Buscar en Hidrozen" class="input" name="text" type="text">
             <a href="{% url 'login' %}" class="btn-login">Login</a>
-            
         </ul>  
     </main>
 
-        
+    <!-- Modales -->
+    <div id="¿Quienes-somos?" class="overlay">
+        <div class="popup-card">
+            <h2>¿Quiénes somos?</h2>
+            <a class="closeMision close" href="#">&times;</a>
+            <div class="content">
+                <p>Somos una empresa dedicada a ofrecer soluciones innovadoras para el riego de plantas.</p>
+            </div>
+        </div>
+    </div>
 
-    
+    <div id="Misión" class="overlay">
+        <div class="popup-card">
+            <h2>Misión</h2>
+            <a class="closeMision close" href="#">&times;</a>
+            <div class="content">
+                <p>Nuestra misión es proporcionar soluciones innovadoras de riego que promuevan el crecimiento 
+                saludable de las plantas, reduciendo el desperdicio de agua y optimizando el tiempo de nuestros clientes.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="Visión" class="overlay">
+        <div class="popup-card">
+            <h2>Visión</h2>
+            <a class="closeMision close" href="#">&times;</a>
+            <div class="content">
+                <p>Queremos ser líderes en el mercado de soluciones de riego inteligente, promoviendo la sostenibilidad y la eficiencia del agua.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="Productos" class="overlay">
+        <div class="popup-card">
+            <h2>Productos</h2>
+            <a class="closeMision close" href="#">&times;</a>
+            <div class="content">
+                <p>Presentamos el Regador Automático HidroZen, diseñado para ser parte integral de cualquier proyecto de riego inteligente.</p>
+                <ul>
+                    <li><strong>Regador Automático HidroZen:</strong> Este dispositivo innovador optimiza el uso del agua...</li>
+                    <li><strong>Sensores de Humedad:</strong> Monitorean constantemente la humedad del suelo...</li>
+                    <li><strong>Controladores Remotos:</strong> Permiten el control del sistema de riego...</li>
+                    <li><strong>Sistemas de Irrigación Completa:</strong> Soluciones integrales que combinan regadores automáticos...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="Contáctos" class="overlay">
+        <div class="popup-card">
+            <h2>Contáctos</h2>
+            <a class="closeMision close" href="#">&times;</a>
+            <div class="content">
+                <p>Puedes contactarnos a través de nuestro correo electrónico o formulario en línea para más detalles.</p>
+            </div>
+        </div>
+    </div>
+
         <div>
             {% block content%}
             {% endblock%}
