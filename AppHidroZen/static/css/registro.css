@@ -1,17 +1,39 @@
 /* From Uiverse.io by rahilansari261 */ 
 .form {
-    position: fixed; /* Fijado para que siempre esté centrado */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 90%; /* Ajusta el tamaño en pantallas pequeñas */
-    max-width: 400px; /* Máximo ancho */
-    overflow: auto; /* Permite desplazamiento si es necesario */
-    max-height: 90vh; /* Evita que se corte en pantallas pequeñas */
+    width: 90%;
+    max-width: 400px;
+    overflow: auto;
+    max-height: 90vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-container {
+    margin-bottom: 15px; /* Espaciado debajo de cada campo de entrada */
+}
+
+.title, .subtitle {
+    margin-bottom: 20px; /* Espaciado debajo del título y subtítulo */
+}
+
+.submit {
+    margin-top: 25px; /* Espaciado adicional para el botón de envío */
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: flex-start; /* Alinea los elementos al principio */
+    align-items: center; /* Centra verticalmente */
+    gap: 20px; /* Espacio entre la imagen y el formulario */
+    height: 100vh; /* Asegura que tome toda la altura disponible */
+    width: 100%; /* Toma todo el ancho de la pantalla */
+    background-color: #15172b; /* Fondo opcional */
 }
 
 .title {
@@ -30,7 +52,28 @@
     margin-top: 10px;
 }
 
+.input {
+    color: #fff;
+    border-radius: 12px;
+    border: 2px solid #65657b;
+    box-sizing: border-box;
+    color: #fff; /* Texto blanco visible */
+    font-size: 18px;
+    height: 100%;
+    outline: none;
+    padding: 4px 20px 0;
+    width: 100%;
+}
+
+/* Para que el placeholder también se vea blanco */
+.input::placeholder {
+    color: #aaa; /* puedes usar #fff si quieres blanco puro */
+    opacity: 1;
+}
+
 .input-container {
+
+    color: #eee;
     height: 50px;
     position: relative;
     width: 100%;
@@ -45,11 +88,10 @@
 }
 
 .input {
-    background-color: #303245;
+    color: #fff;
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
-    color: #eee;
     font-size: 18px;
     height: 100%;
     outline: 0;
@@ -118,3 +160,7 @@
 .submit:active {
     background-color: #06b;
 }
+
+
+
+

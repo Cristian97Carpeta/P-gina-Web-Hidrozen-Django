@@ -1,0 +1,227 @@
+/* Estilos para el switch ON/OFF */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50; /* Verde cuando está encendido */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.switch-label {
+    margin-left: 10px;
+    font-size: 1em;
+    color: #555;
+    vertical-align: middle; /* Alinea verticalmente con el switch */
+}
+
+.manual-page-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    min-height: 100vh; /* Asegura que ocupe al menos toda la altura de la ventana */
+}
+
+/* Estilos para el contenedor principal de la página de riego manual (sin cambios en el centrado) */
+.manual-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(248, 248, 248, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.manual-main-title {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Contenedor del estado del riego */
+.manual-status-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.manual-status-title {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.manual-status-text {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.manual-status-text.activo {
+    color: #333;
+}
+
+.manual-status-text.inactivo {
+    color: red;
+}
+
+/* Contenedor de los botones de control */
+.manual-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los botones de activar y desactivar */
+.manual-activate-button,
+.manual-deactivate-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.manual-activate-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.manual-activate-button:hover {
+    background-color: #45a049;
+}
+
+.manual-deactivate-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.manual-deactivate-button:hover {
+    background-color: #d32f2f;
+}
+
+.manual-deactivate-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Contenedor del selector de duración */
+.manual-duration-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.manual-duration-selector label {
+    font-size: 1em;
+    color: #555;
+}
+
+.manual-duration-selector input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 1em;
+}
+
+.manual-activate-timed-button {
+    padding: 10px 20px;
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #3b3b3b; /* Fondo gris claro */
+    color: #f7f4f4; /* Texto gris oscuro */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    box-shadow: none; /* Aseguramos que no haya sombra */
+    background-image: none; /* Eliminamos cualquier degradado */
+}
+
+.manual-activate-timed-button:hover {
+    background-color: #e0e0e0; /* Gris ligeramente más oscuro al pasar el ratón */
+    border-color: #03940d; /* Gris ligeramente más oscuro para el borde al pasar el ratón */
+    color: #222; /* Gris más oscuro para el texto al pasar el ratón */
+}
+
+
+
+/* Contenedor de retroalimentación */
+.manual-feedback {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 1em;
+    text-align: center;
+}
+
+/* Estilo para el mensaje de ACTIVADO */
+.manual-feedback.success {
+    background-color: #ccffcc; /* Fondo verde claro */
+    color: #090808; /* Texto verde oscuro */
+    border: 1px solid #006400;
+}
+
+/* Estilo para el mensaje de DESACTIVADO (antes era .info) */
+.manual-feedback.desactivado {
+    background-color: #ffdddd; /* Fondo rojo claro */
+    color: #8b0000; /* Texto rojo oscuro */
+    border: 1px solid #8b0000;
+}
+
+.manual-feedback.info { /* Podemos dejar este estilo para otros mensajes informativos si los hubiera */
+    background-color: #e6f2ff;
+    color: blue;
+    border: 1px solid blue;
+}
+
+.manual-feedback.warning {
+    background-color: #fffacd;
+    color: orange;
+    border: 1px solid orange;
+}

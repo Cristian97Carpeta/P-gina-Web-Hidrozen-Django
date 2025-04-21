@@ -11,6 +11,14 @@
 
     <script src="{% static 'js/script.js' %}"></script>
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/programacion_automatica.css' %}">
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+<link rel="stylesheet" href="{% static 'css/riego_manual.css' %}">
+{% endblock %}
+
+
+
 
     <title>
         {% block title%}
@@ -31,7 +39,6 @@
             <li><a href="#Visión">Visión</a></li>
             <li><a href="#Productos">Nuestro Producto</a></li>
             <li><a href="#Contáctos">Contáctos</a></li>
-            <input placeholder="Buscar en Hidrozen" class="input" name="text" type="text">
             <a href="{% url 'login' %}" class="btn-login">Login</a>
         </ul>  
     </main>

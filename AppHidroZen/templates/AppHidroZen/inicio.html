@@ -1,0 +1,32 @@
+{% extends "AppHidroZen/base.html" %}
+{% load static %}
+
+{% block title %}
+    Login - HidroZen
+{% endblock %}
+
+{% block content %}
+<body class="inicio-body">
+    <header class="inicio-header">
+        <h1 class="inicio-main-title">¡Riega tus plantas sin preocupaciones!</h1>
+        <p class="inicio-description">Nuestro sistema automatizado cuida de tu jardín para que tú no tengas que hacerlo.</p>
+        <div class="inicio-botones">
+            <a href="{% url 'programacion_automatica' %}" class="inicio-link-programar">
+                <button class="inicio-boton-principal" type="button">Riego Automático</button>
+            </a>
+            <a href="{% url 'riego_manual' %}" class="inicio-link-manual">
+                <button class="inicio-boton-secundario" type="button">Riego Manual</button>
+            </a>
+        </div>
+    </header>
+
+    <section class="inicio-beneficios">
+        <h2 class="inicio-beneficios-titulo">Beneficios Clave</h2>
+        <ul class="inicio-beneficios-lista">
+            <li class="inicio-beneficio-item">* Ahorro de agua inteligente</li>
+            <li class="inicio-beneficio-item">* Programación personalizada</li>
+            <li class="inicio-beneficio-item">* Plantas más saludables y felices</li>
+        </ul>
+    </section>
+</body>
+{% endblock %}

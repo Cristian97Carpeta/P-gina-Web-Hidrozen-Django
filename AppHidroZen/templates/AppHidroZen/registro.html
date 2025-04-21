@@ -5,25 +5,31 @@
 {% endblock %}
 
 {% block content %}
+
+
+
 <!-- From Uiverse.io by rahilansari261 --> 
 <div class="form">
     <div class="title">Bienvenido</div>
     <div class="subtitle">¡Vamos a crear tu cuenta!</div>
 
 <div class="input-container ic1">
-    <input placeholder="" type="text" class="input" id="firstname">
+    <input placeholder="Ej: Juan" type="text" class="input" id="firstname">
+
     <div class="cut"></div>
-    <label class="iLabel" for="firstname">Primer Nombre</label>
+    <label class="iLabel" for="firstname">Nombres</label>
 </div>
 
 <div class="input-container ic2">
-    <input placeholder="" type="text" class="input" id="lastname">
+    <input placeholder="Ej: Molina" type="text" class="input" id="firstname">
+
     <div class="cut"></div>
-    <label class="iLabel" for="lastname">Segundo Nombre</label>
+    <label class="iLabel" for="lastname">Apellidos</label>
 </div>
 
 <div class="input-container ic2">
-    <input placeholder="" type="text" class="input" id="email">
+    <input placeholder="Ej: Juan.molina@gmail.com" type="text" class="input" id="firstname">
+
     <div class="cut cut-short"></div>
     <label class="iLabel" for="email">Email</label>
 </div>
@@ -44,7 +50,10 @@
     <label class="iLabel" for="password">Contraseña</label>
 </div>
 
+<a href="{% url 'inicio' %}">
+    <button class="submit" type="button">Registrarse</button>
+</a>
 
-    <button class="submit" type="text">submit</button>
 </div>
+
 {% endblock %}
