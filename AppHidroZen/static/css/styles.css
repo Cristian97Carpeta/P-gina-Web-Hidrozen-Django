@@ -30,6 +30,50 @@ main {
     flex-grow: 1; /* Permite que el contenido crezca y empuje el footer hacia abajo */
 }
 
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px; /* Espaciado interno */
+    margin-bottom: 100px; /* Separación del footer */
+    margin-top: -100px;
+
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #f0f8ff;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px; /* Separación entre el título y el párrafo */
+    color: #9FFF94;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px; /* Separación entre el párrafo y el botón */
+}
+
+.hero button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #044718;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.hero button:hover {
+    background-color: #06d347;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+
 
 
 
@@ -102,8 +146,10 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 50px;
+    margin-top: 0px; /* Ajusta este valor según la altura deseada */
 }
+
 
 button {
     --green: #1BFD9C;
@@ -217,6 +263,7 @@ button:hover {
     border-radius: 10px;
     color: #f0f8ff;
 }
+
 
 .close {
     color: #aaa;
@@ -410,6 +457,9 @@ ul {
 .example-2 .icon-content a[data-social="youtube"] ~ .tooltip {
     background-color: #ff0000;
 }
+
+
+
 
 
 
