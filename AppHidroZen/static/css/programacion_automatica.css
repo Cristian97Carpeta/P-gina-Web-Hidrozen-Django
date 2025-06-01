@@ -1,49 +1,60 @@
 /* Contenedor principal para el contenido */
-
-
-
 .auto-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra el contenido verticalmente */
-    align-items: center; /* Centra el contenido horizontalmente */
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    max-width: 900px; /* Limita el ancho máximo */
+    max-width: 900px;
     padding: 20px;
-    margin: 0 auto; /* Asegura que el contenedor esté centrado */
-    min-height: 100vh; /* Asegura que el contenido ocupe al menos toda la pantalla */
+    margin: 0 auto;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-/* Ajusta el slider de progreso */
-.auto-slider-container {
+.auto-slider-container, .auto-schedule-container {
     width: 50%;
-    margin-bottom: 20px; /* Añade un poco de espacio entre los elementos */
+    margin-bottom: 20px;
     padding: 15px;
     background: rgba(104, 103, 103, 0.7);
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 77, 0, 0.5);
 }
 
-/* Contenedor de la programación */
 .auto-schedule-container {
     margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 77, 0, 0.5);
+    margin-bottom: 30px;
+}
+
+/* Nuevo: duración */
+.auto-duration-container {
+    width: 50%;
+    margin-bottom: 25px;
     padding: 15px;
     background: rgba(104, 103, 103, 0.7);
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 77, 0, 0.5);
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px; /* Asegura que haya espacio abajo */
+    text-align: center;
+}
+
+.auto-duration-slider {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.auto-duration-label {
+    margin-top: 10px;
+    font-weight: 600;
+    color: white;
 }
 
 /* Botón de programar */
 .auto-program-button {
     font-size: 18px;
     padding: 12px 20px;
-    margin-top: 30px; /* Espacio grande para separar del footer */
-    margin-bottom: 40px; /* Asegura que haya suficiente espacio en la parte inferior */
+    margin-top: 30px;
+    margin-bottom: 40px;
     border: none;
     background-color: #2e8b57;
     color: white;
@@ -67,7 +78,6 @@
     text-align: center;
 }
 
-/* Asegura que el contenido del modal sea visible */
 #modal.show {
     display: block;
     opacity: 1;
@@ -78,7 +88,6 @@
     opacity: 0;
 }
 
-/* Animación de entrada suave */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -101,15 +110,15 @@
 .auto-wrapper > *:nth-child(4) { animation-delay: 0.8s; }
 .auto-wrapper > *:nth-child(5) { animation-delay: 1s; }
 
-/* Mejor distribución en pantallas pequeñas */
 @media (max-width: 768px) {
     .auto-slider-container,
-    .auto-schedule-container {
-        width: 80%; /* Hace que los contenedores no sean tan anchos en dispositivos pequeños */
+    .auto-schedule-container,
+    .auto-duration-container {
+        width: 80%;
     }
 
     .auto-program-button {
-        width: 100%; /* Hace que el botón ocupe todo el ancho disponible en pantallas pequeñas */
+        width: 100%;
     }
 }
 
@@ -119,8 +128,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Asegura que el canvas no interfiera con la interacción del usuario */
-    z-index: -1; /* Coloca el canvas detrás de los demás elementos */
+    pointer-events: none;
+    z-index: -1;
 }
-
 

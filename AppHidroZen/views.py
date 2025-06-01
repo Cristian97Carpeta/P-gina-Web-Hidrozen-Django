@@ -34,7 +34,7 @@ def registro_view(request: HttpRequest) -> HttpResponse:
         HttpResponse: Página HTML renderizada para el registro.
 
     """
-    return render(request, "AppHidroZen/registro.html")
+    return render(request, "AppHidroZen/registro.html", {'message':'hjhfhgf'})
 
 def programacion_automatica_view(request: HttpRequest) -> HttpResponse:
     """Renderiza la página de programación automática del sistema de riego.
