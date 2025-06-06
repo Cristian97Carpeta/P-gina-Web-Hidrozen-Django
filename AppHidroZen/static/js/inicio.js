@@ -41,7 +41,7 @@ programButton.addEventListener('click', function () {
         return;
     }
 
-    const esp32IP = "http://192.168.20.7";
+    const esp32IP = "http://192.168.1.18";
     const timestamp = new Date().getTime();
 
     // Mostrar en consola la URL que se va a usar

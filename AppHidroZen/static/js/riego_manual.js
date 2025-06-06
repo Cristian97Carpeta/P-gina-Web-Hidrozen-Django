@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const manualSwitch = document.getElementById('manualSwitch');
-    const deactivateManualButton = document.getElementById('deactivateManual'); // Ya no se usa directamente
     const activateTimedButton = document.getElementById('activateTimed');
     const manualDurationInput = document.getElementById('manualDuration');
     const manualStatusText = document.getElementById('manualStatus');
     const manualFeedbackDiv = document.getElementById('manualFeedback');
     const switchLabel = document.querySelector('.switch-label');
 
-    let isRiegoManualActivo = false; // Variable para rastrear el estado
+    let isRiegoManualActivo = false;
 
     function actualizarEstadoRiego(activo) {
         isRiegoManualActivo = activo;
@@ -20,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function mostrarMensaje(mensaje, tipo = 'info') {
         manualFeedbackDiv.textContent = mensaje;
-        manualFeedbackDiv.className = `manual-feedback ${tipo}`; // Aseguramos que siempre esté la clase base 'manual-feedback'
+        manualFeedbackDiv.className = `manual-feedback ${tipo}`;
         setTimeout(() => {
             manualFeedbackDiv.textContent = '';
-            manualFeedbackDiv.className = 'manual-feedback'; // Volvemos a la clase base para limpiar estilos específicos
+            manualFeedbackDiv.className = 'manual-feedback';
         }, 3000);
     }
 
@@ -31,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const activar = this.checked;
         const url = activar ? '/api/riego/manual/activar/' : '/api/riego/manual/desactivar/';
         const mensajeEstado = activar ? 'activado' : 'desactivado';
-        const tipoMensaje = activar ? 'success' : 'desactivado'; // Usamos 'desactivado' como tipo
-    
+        const tipoMensaje = activar ? 'success' : 'desactivado';
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -58,12 +57,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Evento para activar el riego por una duración específica (sin cambios)
     activateTimedButton.addEventListener('click', function() {
-        // ... (tu código existente para activar por duración) ...
+        const duracion = parseInt(manualDurationInput.value);
+
+        if (isNaN(duracion) || duracion < 2 || duracion > 60) {
+            mostrarMensaje("Duración inválida. Debe estar entre 2 y 60 segundos.", 'error');
+            return;
+        }
+
+        fetch('/api/riego/manual/activar_por_tiempo/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ duration: duracion })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                actualizarEstadoRiego(true);
+                mostrarMensaje(`Riego manual activado por ${duracion} segundos.`, 'success');
+                setTimeout(() => {
+                    actualizarEstadoRiego(false);
+                }, duracion * 1000);
+            } else {
+                mostrarMensaje(`Error al activar por duración: ` + data.error, 'error');
+            }
+        })
+        .catch(error => {
+            mostrarMensaje('Error de conexión: ' + error, 'error');
+        });
     });
 
     function getCookie(name) {
-        // ... (tu función existente para obtener la cookie CSRF) ...
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 });

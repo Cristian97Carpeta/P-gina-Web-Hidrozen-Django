@@ -1,51 +1,95 @@
-# HidroZen
+🌿 HidroZen
+HidroZen es un sistema automatizado de riego inteligente diseñado para optimizar el cuidado de plantas mediante sensores de humedad y bombas de agua. Su objetivo es garantizar un riego eficiente, sostenible y personalizado según las necesidades específicas de cada planta.
 
-HidroZen es un sistema automatizado de riego diseñado para optimizar el cuidado de plantas. Utiliza sensores de humedad y bombas de agua para garantizar un riego eficiente y adaptado a las necesidades específicas de cada planta. Este proyecto busca mejorar el mantenimiento de jardines y cultivos, promover prácticas de riego sostenibles y facilitar la vida de los usuarios.
+🚀 Objetivos del Proyecto
+Desarrollar un sistema de riego eficiente y adaptable para distintos tipos de plantas.
 
-## Objetivos del Proyecto
+Automatizar el riego para reducir el consumo innecesario de agua.
 
-- Crear un sistema de riego eficiente y adaptable para diversos tipos de plantas.
-- Proporcionar una solución automatizada que minimice el consumo excesivo de agua.
-- Garantizar la seguridad y la integridad de los datos relacionados con el sistema.
+Asegurar la integridad, privacidad y seguridad de los datos recopilados por el sistema.
 
-## Funcionalidades Principales
+🔧 Funcionalidades Principales
+Monitoreo de humedad del suelo: Sensores que detectan los niveles de humedad en tiempo real.
 
-- **Sensores de humedad del suelo:** Detectan los niveles de humedad para activar el riego automáticamente.
-- **Control personalizado:** Configuración específica para distintos tipos de plantas según sus necesidades de agua.
-- **Automatización:** Activación automática de bombas de agua para un riego eficiente.
-- **Gestión de datos:** Registro de niveles de humedad y configuraciones almacenados de forma segura.
+Riego automatizado: Activación automática de bombas de agua cuando se detectan niveles bajos de humedad.
 
-## Beneficios
+Configuración personalizada: Parámetros específicos por tipo de planta para ajustar el riego según sus requerimientos.
 
-- **Sostenibilidad:** Reduce el desperdicio de agua fomentando prácticas responsables de riego.
-- **Practicidad:** Facilita el mantenimiento de jardines y cultivos, ahorrando tiempo y esfuerzo.
-- **Versatilidad:** Adapta el riego a las necesidades de diferentes plantas.
+Gestión de datos: Registro seguro de humedad, fechas de riego y configuraciones individuales.
 
-## Requisitos de Seguridad
+🌱 Beneficios
+Sostenibilidad: Minimiza el desperdicio de agua al adaptar el riego a condiciones reales del suelo.
 
-Para garantizar un sistema seguro y confiable, se han implementado las siguientes medidas de seguridad:
-- Uso de consultas preparadas y validación de entradas para evitar inyecciones SQL.
-- Cifrado de datos en tránsito (HTTPS) y en reposo (algoritmos como AES) para proteger la información sensible.
-- Validación y sanitización de todos los campos de entrada para prevenir vulnerabilidades de Cross-Site Scripting (XSS).
+Comodidad: Automatiza el cuidado de las plantas, reduciendo el tiempo y esfuerzo necesarios.
 
-## Impacto Esperado
+Versatilidad: Compatible con diversos tipos de plantas, desde jardines domésticos hasta cultivos agrícolas.
 
-HidroZen está diseñado para beneficiar tanto a aficionados como a agricultores, ofreciendo una solución eficiente, sostenible y tecnológica que simplifica el cuidado de las plantas.
+🔐 Seguridad del Sistema
+Se han aplicado buenas prácticas de seguridad para garantizar la confiabilidad del sistema:
 
-## Instalación y Uso
+Validación y sanitización de entradas para evitar vulnerabilidades como inyección SQL y XSS.
 
-1. **Hardware necesario:**
-   - Sensores de humedad.
-   - Bombas de agua.
-   - Microcontrolador compatible (ej. Arduino, Raspberry Pi).
-2. **Software necesario:**
-   - Código fuente para el control del sistema (pendiente de integración).
-   - Aplicación (opcional) para la gestión y monitoreo.
+Uso de consultas preparadas para proteger la base de datos.
 
-Sigue las instrucciones del manual incluido para instalar y configurar el sistema.
+Cifrado de datos en tránsito (por ejemplo, mediante HTTPS) y en reposo (por ejemplo, con AES).
 
-## Autor
+🧑‍💻 Comandos de Django
+Si el sistema HidroZen incluye una aplicación web desarrollada con Django, aquí están los comandos más comunes para su uso:
 
-- **Cristian** - Desarrollo y diseño del sistema HidroZen.
+📦 Instalación de dependencias
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+🛠️ Migraciones de la base de datos
+bash
+Copiar
+Editar
+python manage.py makemigrations
+python manage.py migrate
+👤 Crear un superusuario para el panel de administración
+bash
+Copiar
+Editar
+python manage.py createsuperuser
+🚀 Levantar el servidor de desarrollo
+bash
+Copiar
+Editar
+python manage.py runserver
+🧪 Ejecutar las pruebas del sistema
+bash
+Copiar
+Editar
+python manage.py test
+Asegúrate de tener configurado tu entorno virtual y el archivo .env con las variables necesarias (como base de datos, claves secretas, etc.).
 
----
+🌍 Impacto Esperado
+HidroZen está diseñado para ser una solución accesible y escalable, útil tanto para aficionados a la jardinería como para agricultores que buscan modernizar sus prácticas de riego con tecnología sostenible.
+
+🛠️ Instalación y Puesta en Marcha
+Requisitos de Hardware
+Sensores de humedad del suelo.
+
+Bombas de agua controladas por relé.
+
+Microcontrolador compatible (ej. Arduino, Raspberry Pi, etc.).
+
+Requisitos de Software
+Firmware del sistema de riego (próximamente disponible).
+
+Aplicación web o móvil para monitoreo y configuración (opcional).
+
+Manual de instalación incluido en el repositorio.
+
+Pasos Básicos
+Conecta los sensores y actuadores al microcontrolador según el diagrama del proyecto.
+
+Sube el código al microcontrolador.
+
+Configura los parámetros de riego según tus plantas desde la interfaz (cuando esté disponible).
+
+¡Listo! El sistema comenzará a funcionar de forma autónoma.
+
+👤 Autor
+Cristian – Diseño y desarrollo del sistema HidroZen.

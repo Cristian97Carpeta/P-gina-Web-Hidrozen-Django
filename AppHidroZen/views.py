@@ -1,133 +1,146 @@
-"""Vistas (views) de la aplicación AppHidroZen para manejar la lógica de riego, usuarios y demás funcionalidades."""
-
-import json
-import time  # Para simular la interacción con el hardware
-
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render
+import requests
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
+import logging
 
+logger = logging.getLogger(__name__) 
 
-def home(request: HttpRequest) -> HttpResponse:
-    """Renderiza la página principal (home) de la aplicación.
+# IP del ESP32
+ESP32_IP = "http://192.168.1.18"
 
-    Returns:
-        HttpResponse: Página HTML renderizada para la vista principal.
+# --- Vistas para renderizar plantillas HTML ---
 
-    """
-    return render(request, "AppHidroZen/home.html")
+def home(request):
+    """Página de inicio."""
+    return render(request, "AppHidroZen/home.html")  # ✅ Ruta corregida
 
+def login_view(request):
+    """Página de inicio de sesión."""
+    return render(request, "AppHidroZen/login.html")  # ✅ Asume que login.html está en la misma carpeta
 
-def login_view(request: HttpRequest) -> HttpResponse:
-    """Renderiza la página de login de usuario.
+def registro_view(request):
+    """Página de registro de usuarios."""
+    return render(request, "AppHidroZen/registro.html")
 
-    Returns:
-        HttpResponse: Página HTML renderizada para login.
-
-    """
-    return render(request, "AppHidroZen/login.html")
-
-def registro_view(request: HttpRequest) -> HttpResponse:
-    """Renderiza la página de registro de usuario.
-
-    Returns:
-        HttpResponse: Página HTML renderizada para el registro.
-
-    """
-    return render(request, "AppHidroZen/registro.html", {'message':'hjhfhgf'})
-
-def programacion_automatica_view(request: HttpRequest) -> HttpResponse:
-    """Renderiza la página de programación automática del sistema de riego.
-
-    Returns:
-        HttpResponse: Página HTML renderizada para la vista de programación automática.
-
-    """
+def programacion_automatica_view(request):
+    """Configuración de riego automático."""
     return render(request, "AppHidroZen/programacion_automatica.html")
 
-def inicio_view(request: HttpRequest) -> HttpResponse:
-    """Renderiza la página de inicio de la aplicación HidroZen.
-
-    Returns:
-        HttpResponse: Página HTML renderizada para la vista de inicio.
-
-    """
+def inicio_view(request):
+    """Inicio principal tras login."""
     return render(request, "AppHidroZen/inicio.html")
 
-def riego_manual_view(request: HttpRequest) -> HttpResponse:
-    """Renderiza la página de control manual del sistema de riego.
-
-    Returns:
-        HttpResponse: Página HTML renderizada para el control manual.
-
-    """
+def riego_manual_view(request):
+    """Interfaz de control manual del riego."""
     return render(request, "AppHidroZen/riego_manual.html")
 
-#*********************************VISTAS PARA JAVASCRIPT**********************************#
+# --- API para controlar el ESP32 ---
 
-#*para integrar la funcionalidad de "Riego Manual" con JavaScript,
-# necesitaré estas vistas en mi views.py para que actúen como endpoints de API.
-# Estas vistas serán las que el código JavaScript llamará para activar y desactivar el riego,
-# y para activar el riego por un tiempo específico.#
-
-@csrf_exempt # Si no estás usando CSRF en tus pruebas locales, pero ¡recuerda habilitarlo en producción!
-def activar_riego_manual(request: HttpRequest) -> JsonResponse:
-    """Activa manualmente el sistema de riego a través de una solicitud POST.
-
-    Este endpoint permite al usuario iniciar el riego de forma manual.
-    Es útil para pruebas o para activar el sistema fuera de los horarios automáticos.
-
-    Returns:
-        JsonResponse: Respuesta con el estado de la operación.
-
+@csrf_exempt
+def activar_riego_manual(request):
     """
-    if request.method == "POST":
-        # Aquí va la lógica para ACTUAR sobre tu hardware de riego
-        time.sleep(1) # Simulación de la acción
-        return JsonResponse({"success": True})
-    return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
-
-@csrf_exempt # ¡Habilitar CSRF en producción!
-def desactivar_riego_manual(request: HttpRequest) -> JsonResponse:
-    """Desactiva manualmente el sistema de riego a través de una solicitud POST.
-
-    Este endpoint se utiliza para apagar el sistema de riego de forma manual.
-    Es útil cuando el usuario desea detener el riego antes de que finalice automáticamente.
-
-    Returns:
-        JsonResponse: Respuesta con el estado de la operación.
-
-    """
-    if request.method == "POST":
-        # Aquí va la lógica para DESACTIVAR tu hardware de riego
-        time.sleep(1) # Simulación de la acción
-        return JsonResponse({"success": True})
-    return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
-
-@csrf_exempt # ¡Habilitar CSRF en producción!
-def activar_riego_por_tiempo(request: HttpRequest) -> JsonResponse:
-    """Activa el sistema de riego por un tiempo específico a través de una solicitud POST.
-
-    Este endpoint espera una solicitud POST que contiene los parámetros necesarios
-    para activar el riego durante un tiempo determinado.
-
-    Nota: Este endpoint está exento de CSRF por ahora, pero debe protegerse en producción.
-
+    Vista API para activar el riego manual en el ESP32.
+    Espera una petición POST.
     """
     if request.method == "POST":
         try:
-            data = json.loads(request.body)
-            duration = int(data.get("duration", 0))
-            if duration > 0:
-                # Aquí va la lógica para activar el riego por 'duration' minutos
-                time.sleep(2) # Simulación de la acción
+            # Construye la URL para la petición al ESP32
+            # CORREGIDO: Cambiado de /manual/start a /manual/activar
+            
+            url = f"{ESP32_IP}/manual/activar"
+            logger.info(f"Intentando conectar a: {url}")
+            response = requests.get(url, timeout=5)# El ESP32 espera GET
+            logger.info(f"Respuesta del ESP32 (código de estado): {response.status_code}")
+            if response.status_code == 200:
                 return JsonResponse({"success": True})
-            return JsonResponse({"success": False, "error": "Duración inválida"})
+            else:
+                # Si el ESP32 devuelve un error, se lo indica al cliente
+                logger.error(f"Error en ESP32. Código de estado: {response.status_code}, Contenido: {response.text}")
+                return JsonResponse({"success": False, "error":  f"Error en ESP32: {response.text}"}, status=response.status_code)
+        except requests.RequestException as e:
+            # Captura errores de conexión o de la petición
+            logger.error(f"Error de conexión al ESP32: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+        except Exception as e:
+            # Captura cualquier otro error inesperado
+            logger.error(f"¡Error inesperado en activar_riego_manual!: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+    logger.warning(f"Intento de acceder a activar_riego_manual con método no permitido: {request.method}")
+    return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
+
+
+@csrf_exempt
+def desactivar_riego_manual(request):
+    """
+    Vista API para desactivar el riego manual en el ESP32.
+    Espera una petición POST.
+    """
+    if request.method == "POST":
+        try:
+            # Construye la URL para la petición al ESP32
+            # CORREGIDO: Cambiado de /manual/start a /manual/desactivar
+            url = f"{ESP32_IP}/manual/desactivar"
+            logger.info(f"Intentando conectar a: {url}")
+            response = requests.get(url, timeout=5) # El ESP32 espera GET
+            logger.info(f"Respuesta del ESP32 (código de estado): {response.status_code}")
+            if response.status_code == 200:
+                return JsonResponse({"success": True})
+            else:
+                # Si el ESP32 devuelve un error, se lo indica al cliente
+                logger.error(f"Error en ESP32. Código de estado: {response.status_code}, Contenido: {response.text}")
+                return JsonResponse({"success": False, "error": f"Error en ESP32: {response.text}"}, status=response.status_code)
+        except requests.RequestException as e:
+            # Captura errores de conexión o de la petición
+            logger.error(f"Error de conexión al ESP32: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+        except Exception as e:
+            # Captura cualquier otro error inesperado
+            logger.error(f"¡Error inesperado en desactivar_riego_manual!: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+    logger.warning(f"Intento de acceder a desactivar_riego_manual con método no permitido: {request.method}")
+    return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
+
+@csrf_exempt
+def activar_riego_por_tiempo(request):
+    """
+    Vista API para activar el riego por un tiempo específico en el ESP32.
+    Espera una petición POST con un JSON que contenga la duración.
+    """
+    if request.method == "POST":
+        try:
+            # Carga los datos JSON del cuerpo de la petición
+            data = json.loads(request.body)
+            # Obtiene la duración de los datos, por defecto 0 si no se encuentra
+            duration = int(data.get("duration", 0))
+
+            # Valida que la duración sea un valor positivo
+            if duration <= 0:
+                return JsonResponse({"success": False, "error": "Duración inválida"}, status=400)
+
+            # Construye la URL para la petición al ESP32 con la duración
+            # La ruta /manual/activar_duracion es la correcta en el ESP32
+            url = f"{ESP32_IP}/manual/activar_duracion?duracion={duration}"
+            logger.info(f"Intentando conectar a: {url}")
+            response = requests.get(url, timeout=5) # El ESP32 espera GET
+            logger.info(f"Respuesta del ESP32 (código de estado): {response.status_code}")
+            if response.status_code == 200:
+                return JsonResponse({"success": True})
+            else:
+                # Si el ESP32 devuelve un error, se lo indica al cliente
+                logger.error(f"Error en ESP32. Código de estado: {response.status_code}, Contenido: {response.text}")
+                return JsonResponse({"success": False, "error": f"Error en ESP32: {response.text}"}, status=response.status_code)
         except json.JSONDecodeError:
-            return JsonResponse({"success": False, "error": "Datos JSON inválidos"}, status=400)
-    else:
-        return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
-
-
-
-
+            # Captura errores si el cuerpo de la petición no es un JSON válido
+            return JsonResponse({"success": False, "error": "JSON inválido"}, status=400)
+        except requests.RequestException as e:
+            # Captura errores de conexión o de la petición
+            logger.error(f"Error de conexión al ESP32: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+        except Exception as e:
+            # Captura cualquier otro error inesperado
+            logger.error(f"¡Error inesperado en activar_riego_por_tiempo!: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+    logger.warning(f"Intento de acceder a activar_riego_por_tiempo con método no permitido: {request.method}")
+    return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
