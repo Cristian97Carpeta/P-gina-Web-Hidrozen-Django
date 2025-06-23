@@ -27,13 +27,21 @@
             <input type="time" id="timePicker" class="auto-schedule-input">
         </div>
         <div class="auto-duration-container" style="margin-top: 15px;">
-            <label for="durationSlider" class="auto-duration-label">Duración de riego (segundos):</label>
+            <label for="durationSlider" class="auto-duration-label">
+                <i class="fas fa-stopwatch"></i> Duración de riego (segundos):
+            </label>
+
             <input type="range" id="durationSlider" min="1" max="60" step="2" value="50" class="auto-duration-slider">
             <p class="auto-duration-label">Duración: <span id="durationValue">600</span> segundos</p>
         </div>
     </div>
 
     <button class="auto-program-button" id="programButton">Programar</button>
+
+    <div class="ip-display-container">
+        <button id="obtenerIPBtn" class="ip-button">Obtener IP del dispositivo</button>
+        <p id="ipMostrada" class="ip-texto">IP del ESP32: <span id="ipValor">No detectada</span></p>
+    </div>
 </div>
 
 <div class="auto-modal" id="modal">
@@ -41,7 +49,34 @@
     <p class="auto-modal-message" id="modalMessage"></p>
     <button class="auto-close-button" id="closeButton">Cerrar</button>
 </div>
+<script>
+function actualizarHumedad() {
+    fetch('/api/humedad/')
+        .then(response => response.json())
+        .then(data => {
+            const valor = data.humedad;
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
 
+            progressBar.value = valor;
+            progressFill.style.width = valor + '%';
+        })
+        .catch(error => {
+            console.error("Error al obtener la humedad:", error);
+        });
+}
+
+// Llamar cada 10 segundos
+setInterval(actualizarHumedad, 10000);
+
+// Llamar al cargar
+actualizarHumedad();
+</script>
+
+<!-- IP dinámica desde Django -->
+<script>
+const esp32IP = "{{ ESP32_IP }}";
+</script>
 <script src="{% static 'js/inicio.js' %}"></script>
 {% endblock %}
 

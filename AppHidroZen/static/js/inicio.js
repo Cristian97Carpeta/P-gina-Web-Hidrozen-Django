@@ -12,7 +12,7 @@ const timePicker = document.getElementById('timePicker');
 const durationSlider = document.getElementById('durationSlider');
 const durationValue = document.getElementById('durationValue');
 
-// Ajustar el tamaño del canvas
+// Ajustar tamaño del canvas
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -28,43 +28,68 @@ durationSlider.addEventListener('input', function () {
     durationValue.textContent = durationSlider.value;
 });
 
+// Función para mostrar el modal
+function mostrarModal(mensaje) {
+    modalMessage.textContent = mensaje;
+    modal.style.display = 'flex';
+}
+//const esp32IP = "http://192.168.20.7";
+
+// Obtener IP del ESP32 desde Django
+async function obtenerIPESP32() {
+    try {
+        const response = await fetch('/obtener_ip/');
+        const data = await response.json();
+        return data.ip; // Devuelve la IP como 'http://192.168.x.x'
+    } catch (error) {
+        console.error("Error obteniendo la IP del ESP32:", error);
+        return null;
+    }
+}
+
 // Botón de programar
-programButton.addEventListener('click', function () {
-    const humidity = progressBar.value;
+programButton.addEventListener('click', async function () {
+    const threshold = Number(progressBar.value);       // humedad seleccionada
     const date = datePicker.value;
     const time = timePicker.value;
     const duration = durationSlider.value;
 
-    if (!humidity || humidity < 5 || !date || !time) {
-        modalMessage.textContent = "Por favor, completa todos los datos correctamente. La humedad debe ser mayor al 5%.";
-        modal.style.display = 'flex';
+    // 1) Obtener la humedad del sensor desde Django
+    let sensorHumedad = 0;
+    try {
+        const res = await fetch('/api/humedad/');
+        const json = await res.json();
+        sensorHumedad = Number(json.humedad);
+    } catch (e) {
+        console.error("No se pudo obtener humedad del sensor:", e);
+        mostrarModal("Error al obtener humedad actual. Intenta de nuevo.");
         return;
     }
 
-    const esp32IP = "http://192.168.1.18";
-    const timestamp = new Date().getTime();
+    // 2) Comparar con el umbral
+    if (sensorHumedad >= threshold) {
+        mostrarModal(`🌱 La humedad actual es ${sensorHumedad}%, por encima del umbral (${threshold}%). No es necesario regar.`);
+        return;  // Salimos sin programar el riego
+    }
 
-    // Mostrar en consola la URL que se va a usar
-    console.log(`[DEBUG] Enviando a: ${esp32IP}/set-duracion?segundos=${duration}&_=${timestamp}`);
-    console.log(`[DEBUG] Enviando a: ${esp32IP}/programar?humedad=${humidity}&fecha=${date}&hora=${time}&_=${timestamp}`);
+    // 3) Si llegamos aquí, la humedad está por debajo del umbral, procedemos
+    const ip = await obtenerIPESP32();
+    if (!ip) {
+        mostrarModal("❌ No se pudo obtener la IP del ESP32.");
+        return;
+    }
 
-    // 1. Enviar duración
-    fetch(`${esp32IP}/set-duracion?segundos=${duration}&_=${timestamp}`)
-        .then(response => response.text())
-        .then(data => console.log("Duración configurada:", data))
-        .catch(error => console.error("Error en duración:", error));
-
-    // 2. Enviar parámetros de programación
-    fetch(`${esp32IP}/programar?humedad=${humidity}&fecha=${date}&hora=${time}&_=${timestamp}`)
-        .then(response => response.text())
-        .then(data => {
-            modalMessage.textContent = data;
-            modal.style.display = 'flex';
-        })
-        .catch(error => {
-            console.error("Error al enviar programación:", error);
-            modalMessage.textContent = "Error al conectar con el servidor del sistema de riego.";
-            modal.style.display = 'flex';
+    const timestamp = Date.now();
+    // Enviar duración
+    await fetch(`${ip}/set-duracion?segundos=${duration}&_=${timestamp}`)
+    .catch(err => console.error("Error en set-duración:", err));
+    // Enviar programación
+    fetch(`${ip}/programar?humedad=${threshold}&fecha=${date}&hora=${time}&_=${timestamp}`)
+        .then(r => r.text())
+        .then(msg => mostrarModal(msg))
+        .catch(err => {
+            console.error("Error al programar:", err);
+            mostrarModal("Error al conectar con la ESP32.");
         });
 });
 
@@ -104,6 +129,18 @@ function animateParticles() {
     requestAnimationFrame(animateParticles);
 }
 animateParticles();
+
+document.getElementById('obtenerIPBtn').addEventListener('click', async function () {
+    try {
+        const response = await fetch('/obtener_ip/');
+        const data = await response.json();
+        document.getElementById('ipValor').textContent = data.ip;
+        console.log("✅ IP obtenida:", data.ip);
+    } catch (error) {
+        console.error("❌ Error al obtener IP:", error);
+        document.getElementById('ipValor').textContent = "Error al obtener IP";
+    }
+});
 
 
 

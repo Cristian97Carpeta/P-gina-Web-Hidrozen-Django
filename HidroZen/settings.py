@@ -130,6 +130,8 @@ STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.72.224']
+ALLOWED_HOSTS = ['*']
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

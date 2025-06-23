@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
     <script src="{% static 'js/script.js' %}"></script>
 
@@ -38,7 +40,7 @@
             <li><a href="#Visión">Visión</a></li>
             <li><a href="#Productos">Nuestro Producto</a></li>
             <li><a href="#Contáctos">Contáctos</a></li>
-            <a href="{% url 'login' %}" class="btn-login">Login</a>
+            <a href="{% url 'login' %}" class="btn-login" id="login">Login</a>
         </ul>  
     </main>
 
@@ -202,7 +204,9 @@
 <p>@HidroZen. DerechosReservados</p>
 
 </footer>
+<script>const esp32IP = "{{ esp32_ip }}";</script>
 
+<script src="{% static 'js/inicio.js' %}"></script>
 
 </body>
 </html>

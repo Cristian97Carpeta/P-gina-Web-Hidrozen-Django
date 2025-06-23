@@ -1,20 +1,69 @@
+from django.views.decorators.csrf import csrf_exempt
+
 import requests
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from .models import DatosRiego
 import json
 import logging
 
 logger = logging.getLogger(__name__) 
 
 # IP del ESP32
-ESP32_IP = "http://192.168.1.18"
+#ESP32_IP = "http://192.168.20.6"
+
+def inicio_view(request):
+    ip_esp32 = obtener_ip_esp32()
+    print(f"🧪 IP que se pasa al template: {ip_esp32}")
+    return render(request, "AppHidroZen/inicio.html", {"esp32_ip": ip_esp32})
+
+# Función para registrar IP enviada por la ESP32
+@csrf_exempt
+def registrar_ip(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        ip = data.get("ip")
+        print(f"📡 IP recibida desde ESP32: {ip}")
+        return JsonResponse({"status": "ok", "ip": ip})
+    return JsonResponse({"status": "error", "message": "Método no permitido"}, status=405)
+
+
+# --- Función para obtener IP del ESP32 desde archivo ---
+def obtener_ip_esp32():
+    try:
+        with open("esp32_ip.txt", "r") as f:
+            ip = f.read().strip()
+            return f"http://{ip}"
+    except FileNotFoundError:
+        return "http://192.168.20.6"  # Valor por defecto
+    
+
+# --- Vista para responder la IP al frontend ---
+def obtener_ip(request):
+    ip = obtener_ip_esp32()
+    return JsonResponse({"ip": ip})
+
+
+
+
+
+# ESP32_IP = obtener_ip_esp32()
+
+
+# --- API en Django para entregar el último valor ---
+
+def obtener_humedad_actual(request):
+    ultimo = DatosRiego.objects.last()
+    valor = float(ultimo.humedad_suelo) if ultimo else 0.0
+    return JsonResponse({'humedad': valor})
 
 # --- Vistas para renderizar plantillas HTML ---
 
 def home(request):
     """Página de inicio."""
-    return render(request, "AppHidroZen/home.html")  # ✅ Ruta corregida
+    ip_esp32 = obtener_ip_esp32()
+    return render(request, "AppHidroZen/home.html", {"esp32_ip": ip_esp32})
+# ✅ Ruta corregida
 
 def login_view(request):
     """Página de inicio de sesión."""
@@ -29,8 +78,10 @@ def programacion_automatica_view(request):
     return render(request, "AppHidroZen/programacion_automatica.html")
 
 def inicio_view(request):
-    """Inicio principal tras login."""
-    return render(request, "AppHidroZen/inicio.html")
+    #"""Inicio principal tras login."""
+    ip_esp32 = obtener_ip_esp32()  # Lee la IP desde el archivo
+    return render(request, "AppHidroZen/inicio.html", {"esp32_ip": ip_esp32})
+# return render(request, "AppHidroZen/inicio.html")
 
 def riego_manual_view(request):
     """Interfaz de control manual del riego."""
@@ -48,8 +99,8 @@ def activar_riego_manual(request):
         try:
             # Construye la URL para la petición al ESP32
             # CORREGIDO: Cambiado de /manual/start a /manual/activar
-            
-            url = f"{ESP32_IP}/manual/activar"
+            esp32_ip = obtener_ip_esp32()
+            url = f"{esp32_ip}/manual/activar"
             logger.info(f"Intentando conectar a: {url}")
             response = requests.get(url, timeout=5)# El ESP32 espera GET
             logger.info(f"Respuesta del ESP32 (código de estado): {response.status_code}")
@@ -81,7 +132,8 @@ def desactivar_riego_manual(request):
         try:
             # Construye la URL para la petición al ESP32
             # CORREGIDO: Cambiado de /manual/start a /manual/desactivar
-            url = f"{ESP32_IP}/manual/desactivar"
+            esp32_ip = obtener_ip_esp32()
+            url = f"{esp32_ip}/manual/desactivar"
             logger.info(f"Intentando conectar a: {url}")
             response = requests.get(url, timeout=5) # El ESP32 espera GET
             logger.info(f"Respuesta del ESP32 (código de estado): {response.status_code}")
@@ -121,7 +173,8 @@ def activar_riego_por_tiempo(request):
 
             # Construye la URL para la petición al ESP32 con la duración
             # La ruta /manual/activar_duracion es la correcta en el ESP32
-            url = f"{ESP32_IP}/manual/activar_duracion?duracion={duration}"
+            esp32_ip = obtener_ip_esp32()
+            url = f"{esp32_ip}/manual/activar_duracion?duracion={duration}"
             logger.info(f"Intentando conectar a: {url}")
             response = requests.get(url, timeout=5) # El ESP32 espera GET
             logger.info(f"Respuesta del ESP32 (código de estado): {response.status_code}")
@@ -143,4 +196,27 @@ def activar_riego_por_tiempo(request):
             logger.error(f"¡Error inesperado en activar_riego_por_tiempo!: {e}")
             return JsonResponse({"success": False, "error": str(e)}, status=500)
     logger.warning(f"Intento de acceder a activar_riego_por_tiempo con método no permitido: {request.method}")
+    return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)
+# --- API para recibir la IP del ESP32 ---
+@csrf_exempt
+def recibir_ip_esp32(request):
+    """
+    Vista que recibe la IP del ESP32 vía POST desde el propio dispositivo.
+    Espera un JSON como: {"ip": "192.168.20.6"}
+    """
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            ip = data.get("ip")
+            if not ip:
+                return JsonResponse({"success": False, "error": "Falta el campo 'ip'"}, status=400)
+            with open("esp32_ip.txt", "w") as f:
+                f.write(ip)
+            logger.info(f"IP del ESP32 registrada: {ip}")
+            return JsonResponse({"success": True, "ip": ip})
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "error": "JSON inválido"}, status=400)
+        except Exception as e:
+            logger.error(f"Error al recibir IP del ESP32: {e}")
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
     return JsonResponse({"success": False, "error": "Método no permitido"}, status=405)

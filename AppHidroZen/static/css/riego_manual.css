@@ -205,3 +205,23 @@ input:checked + .slider:before {
         width: 100%;
     }
 }
+.ip-display-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.ip-button {
+    padding: 10px 16px;
+    background-color: #a3d62b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 77, 0, 0.3);
+}
+
+.ip-texto {
+    margin-top: 10px;
+    color: white;
+    font-weight: 600;
+}

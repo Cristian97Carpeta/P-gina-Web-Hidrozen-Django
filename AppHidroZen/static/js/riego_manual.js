@@ -105,3 +105,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return cookieValue;
     }
 });
+document.getElementById('obtenerIPBtn').addEventListener('click', async function () {
+    try {
+        const response = await fetch('/obtener_ip/');
+        const data = await response.json();
+        document.getElementById('ipValor').textContent = data.ip;
+        console.log("✅ IP obtenida:", data.ip);
+    } catch (error) {
+        console.error("❌ Error al obtener IP:", error);
+        document.getElementById('ipValor').textContent = "Error al obtener IP";
+    }
+});

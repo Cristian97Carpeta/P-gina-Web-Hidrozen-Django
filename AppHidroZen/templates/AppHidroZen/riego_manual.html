@@ -14,6 +14,7 @@
             <h2 class="manual-status-title">Estado del Riego Manual</h2>
             <p class="manual-status-text" id="manualStatus">Inactivo</p>
         </div>
+        
 
         <div class="manual-controls">
             <label class="switch">
@@ -28,7 +29,10 @@
             <input type="number" id="manualDuration" min="2" max="60" value="30">
             <button class="manual-activate-timed-button" id="activateTimed">Activar por Duración</button>
         </div>
-
+<div class="ip-display-container">
+    <button id="obtenerIPBtn" class="ip-button">Obtener IP del dispositivo wifi</button>
+    <p id="ipMostrada" class="ip-texto">IP del ESP-32: <span id="ipValor">No detectada</span></p>
+</div>
         <div class="manual-feedback" id="manualFeedback">
         </div>
     </div>
